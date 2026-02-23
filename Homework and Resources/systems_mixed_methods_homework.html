@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Homework: Systems of Equations — PDF-ready</title>
+    <meta name="description"
+        content="Worksheet optimized for PDF distribution. Examples explicitly name equations (i) and (ii) and every action refers to the equation being used." />
+
+    <style>
+        :root {
+            --accent: #2b6cb0;
+            --muted: #718096;
+            --text: #1a202c;
+            --purple-accent: #805ad5;
+            --teal-accent: #319795;
+            --line: #e2e8f0;
+            --workspace-h: 190px;
+            --page-max-width: 850px;
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text);
+            background: #ffffff;
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+            padding: 28px 28px 48px 28px;
+            line-height: 1.65;
+        }
+
+        header {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: white;
+            object-fit: cover;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.75rem;
+            margin: 0 0 6px 0;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .header-note {
+            text-align: center;
+            color: var(--muted);
+            margin-top: 8px;
+            margin-bottom: 22px;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            margin-top: 34px;
+            margin-bottom: 14px;
+            border-left: 5px solid var(--accent);
+            padding-left: 14px;
+            color: var(--accent);
+        }
+
+        section {
+            margin-bottom: 36px
+        }
+
+        .example-block {
+            background-color: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 20px 22px;
+            margin-bottom: 24px;
+        }
+
+        .example-title {
+            font-weight: 700;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 8px
+        }
+
+        .badge {
+            font-size: 0.82rem;
+            padding: 4px 8px;
+            border-radius: 5px;
+            color: white
+        }
+
+        .badge-sub {
+            background-color: var(--purple-accent)
+        }
+
+        .badge-elim {
+            background-color: var(--teal-accent)
+        }
+
+        .system-line {
+            margin: 8px 0 14px 0;
+            font-weight: 700
+        }
+
+        .steps-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.98rem
+        }
+
+        .steps-table td {
+            padding: 8px 8px;
+            vertical-align: top;
+            border-bottom: 1px dashed var(--line)
+        }
+
+        .steps-table tr:last-child td {
+            border-bottom: none
+        }
+
+        .step-num {
+            display: inline-block;
+            width: 36px;
+            height: 24px;
+            text-align: center;
+            background: #fff;
+            border-radius: 6px;
+            color: var(--muted);
+            border: 1px solid var(--line);
+            font-weight: 700;
+            margin-right: 8px
+        }
+
+        .eq-label {
+            font-weight: 700;
+            margin-right: 8px
+        }
+
+        .eq-inline {
+            display: inline-block;
+            margin-right: 18px
+        }
+
+        .callout {
+            border-left: 4px solid var(--accent);
+            background: #ffffff;
+            padding: 8px 10px;
+            color: var(--muted);
+            border-radius: 4px;
+            margin-top: 8px
+        }
+
+        .instructions {
+            background-color: #fff7ed;
+            padding: 12px 14px;
+            border-left: 5px solid #ed8936;
+            margin-bottom: 22px
+        }
+
+        .question-item {
+            margin-bottom: 34px;
+            page-break-inside: avoid
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 8px
+        }
+
+        .q-title {
+            font-weight: 700
+        }
+
+        .q-hint {
+            color: var(--muted);
+            font-style: italic
+        }
+
+        .equation-display {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 10px 0 16px 0
+        }
+
+        .workspace {
+            height: var(--workspace-h);
+            border: 2px dashed var(--line);
+            border-radius: 6px;
+            background: #fbfbfb;
+            position: relative;
+            padding: 8px
+        }
+
+        .workspace::before {
+            content: "Write your steps here";
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            color: #cbd5e1;
+            font-size: 0.85rem
+        }
+
+        .workspace.short {
+            height: 140px
+        }
+
+        .mystery-section {
+            border: 2px dashed #ed8936;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fffaf0
+        }
+
+        @page {
+            margin: 0.6in
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .workspace {
+                background: none;
+                border: 1px solid #ccc
+            }
+
+            .callout,
+            .badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact
+            }
+
+            .example-block,
+            .question-item,
+            .mystery-section {
+                page-break-inside: avoid
+            }
+        }
+
+        @media (max-width:720px) {
+            body {
+                padding: 16px
+            }
+        }
+    </style>
+
+    <!-- MathJax for math rendering in PDF previews -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <img src="../edutrack_logo.jpg" alt="EduTrack Logo" class="header-logo">
+        <h1>EduTrack Hub | Systems</h1>
+        <div class="header-note">Name: __________________________ &nbsp;&nbsp;&nbsp; Date: __________________________
+        </div>
+    </header>
+
+    <!-- PART 1: STUDY THESE EXAMPLES -->
+    <section aria-labelledby="part1">
+        <h2 id="part1">Part 1 — Study these examples (every step names the equation)</h2>
+
+        <!-- EXAMPLE A: SUBSTITUTION -->
+        <div class="example-block" aria-labelledby="exA">
+            <div class="example-title">
+                <span class="badge badge-sub">Substitution</span>
+                <span>Use when a variable is already isolated.</span>
+            </div>
+
+            <p style="margin-top:0; font-size:1.1rem"><strong>System:</strong>
+                \(
+                \begin{cases}
+                y = 3x - 5 & \text{equation i} \\
+                2x + y = 10 & \text{equation ii}
+                \end{cases}
+                \)
+            </p>
+
+            <table class="steps-table" role="table" aria-label="Worked example substitution steps">
+                <tr>
+                    <td style="width:12%"><span class="step-num">Step 1</span></td>
+                    <td style="width:58%"><strong>Action:</strong> Substitute the expression from equation
+                        <strong>i</strong> into equation <strong>ii</strong>.
+                    </td>
+                    <td style="width:30%">So, work on <strong>ii</strong>: \( 2x + (3x - 5) = 10 \)</td>
+                </tr>
+
+                <tr>
+                    <td><span class="step-num">Step 2</span></td>
+                    <td><strong>Action:</strong> Simplify and solve equation <strong>ii</strong> for <em>x</em>.</td>
+                    <td>\( 5x - 5 = 10 \Rightarrow 5x = 15 \Rightarrow x = 3 \)</td>
+                </tr>
+
+                <tr>
+                    <td><span class="step-num">Step 3</span></td>
+                    <td><strong>Action:</strong> Plug the found value of <em>x</em> into equation <strong>i</strong>
+                        to find <em>y</em>.</td>
+                    <td>Work on <strong>i</strong>: \( y = 3(3) - 5 = 9 - 5 = 4 \)</td>
+                </tr>
+
+            </table>
+
+            <div class="callout"><strong>Result:</strong> Solution is \( (3,4) \). Note how each step explicitly states
+                which equation is being used or changed.</div>
+        </div>
+
+        <!-- EXAMPLE B: ELIMINATION -->
+        <div class="example-block" aria-labelledby="exB">
+            <div class="example-title">
+                <span class="badge badge-elim">Elimination</span>
+                <span>Use when variables line up and you can cancel one.</span>
+            </div>
+
+            <p style="margin-top:0; font-size:1.1rem"><strong>System:</strong>
+                \(
+                \begin{cases}
+                2x + 9y = -1 & \text{equation i} \\
+                3x + 3y = -5 & \text{equation ii}
+                \end{cases}
+                \)
+            </p>
+
+            <table class="steps-table" role="table" aria-label="Worked example elimination steps">
+                <tr>
+                    <td style="width:12%"><span class="step-num">Step 1</span></td>
+                    <td style="width:58%"><strong>Action:</strong> Multiply equation <strong>ii</strong> by \( -3 \)
+                        so the coefficient of <em>y</em> becomes \( -9 \), which will cancel with equation
+                        <strong>i</strong>'s \(9y\).
+                    </td>
+                    <td style="width:30%">New equation <strong>(ii')</strong>: \( -9x - 9y = 15 \)</td>
+                </tr>
+
+                <tr>
+                    <td><span class="step-num">Step 2</span></td>
+                    <td><strong>Action:</strong> Add equation <strong>i</strong> and the new equation
+                        <strong>ii'</strong> to eliminate <em>y</em> and solve for <em>x</em>.
+                    </td>
+                    <td>\( (2x + 9y) + (-9x - 9y) = -1 + 15 \Rightarrow -7x = 14 \Rightarrow x = -2 \)</td>
+                </tr>
+
+                <tr>
+                    <td><span class="step-num">Step 3</span></td>
+                    <td><strong>Action:</strong> Substitute <em>x = -2</em> into one of the original equations — we will
+                        use equation <strong>ii</strong> to solve for <em>y</em>.</td>
+                    <td>Work on <strong>ii</strong>: \( 3(-2) + 3y = -5 \Rightarrow -6 + 3y = -5 \Rightarrow 3y = 1
+                        \Rightarrow y = \tfrac{1}{3} \)</td>
+                </tr>
+
+            </table>
+
+            <div class="callout"><strong>Result:</strong> Solution is \( (-2,\tfrac{1}{3}) \). Each step clearly names
+                which equation you're transforming or using to substitute.</div>
+        </div>
+
+    </section>
+
+    <!-- PART 2: PRACTICE -->
+    <section aria-labelledby="part2">
+        <h2 id="part2">Part 2 — Your turn (show which equation you use)</h2>
+
+        <div class="instructions"><strong>Instructions:</strong> Write your steps clearly. Label systems as
+            <strong>equation i</strong> and <strong>equation ii</strong>. State which equation you are effectively
+            working on (e.g., "Substitute into i").
+        </div>
+
+        <div class="question-item">
+            <div class="question-header">
+                <div class="q-title">Question 1</div>
+                <div class="q-hint">Hint: Substitution — set i = ii</div>
+            </div>
+            <div class="equation-display">
+                \( \begin{cases} y = 2x + 3 & \text{equation i} \\ y = 3x - 4 & \text{equation ii} \end{cases} \)
+            </div>
+            <div class="workspace"></div>
+        </div>
+
+        <div class="question-item">
+            <div class="question-header">
+                <div class="q-title">Question 2</div>
+                <div class="q-hint">Hint: Substitution</div>
+            </div>
+            <div class="equation-display">
+                \( \begin{cases} y = 5x + 1 & \text{equation i} \\ y = 7x + 13 & \text{equation ii} \end{cases} \)
+            </div>
+            <div class="workspace"></div>
+        </div>
+
+        <div class="question-item">
+            <div class="question-header">
+                <div class="q-title">Question 3</div>
+                <div class="q-hint">Hint: Substitution (use ii into i)</div>
+            </div>
+            <div class="equation-display">
+                \( \begin{cases} 2x + y = 6 & \text{equation i} \\ y = 4 - x & \text{equation ii} \end{cases} \)
+            </div>
+            <div class="workspace"></div>
+        </div>
+
+        <div class="question-item">
+            <div class="question-header">
+                <div class="q-title">Question 4</div>
+                <div class="q-hint">Hint: Elimination (add i and ii)</div>
+            </div>
+            <div class="equation-display">
+                \( \begin{cases} 4x + y = 5 & \text{equation i} \\ 2x - y = -2 & \text{equation ii} \end{cases} \)
+            </div>
+            <div class="workspace"></div>
+        </div>
+
+        <div class="question-item">
+            <div class="question-header">
+                <div class="q-title">Question 5</div>
+                <div class="q-hint">Hint: Elimination (multiply to align)</div>
+            </div>
+            <div class="equation-display">
+                \( \begin{cases} 3x - 4y = 10 & \text{equation i} \\ 2x - 5y = 16 & \text{equation ii} \end{cases} \)
+            </div>
+            <div class="workspace"></div>
+        </div>
+
+    </section>
+
+    <!-- PART 3: MYSTERY -->
+    <section aria-labelledby="part3">
+        <h2 id="part3">Part 3 — Mystery Zone (special cases)</h2>
+
+        <div class="mystery-section">
+            <p>Label the equations and follow the same rule: say explicitly what you do to which equation.
+                Then answer: no solution, infinitely many, or one solution?</p>
+
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="q-title">Mystery A</div>
+                </div>
+                <div class="equation-display">
+                    \( \begin{cases} y = x + 5 & \text{equation i} \\ 2x - 2y + 10 = 0 & \text{equation ii} \end{cases}
+                    \)
+                </div>
+                <div class="workspace short"></div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="q-title">Mystery B</div>
+                </div>
+                <div class="equation-display">
+                    \( \begin{cases} 3x + 2y = 4 & \text{equation i} \\ 6x + 4y = 5 & \text{equation ii} \end{cases} \)
+                </div>
+                <div class="workspace short"></div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer style="margin-top:18px; color:var(--muted); font-size:0.92rem">
+
+    </footer>
+
+    <script>
+        window.addEventListener('load', function () {
+            if (window.MathJax && MathJax.typeset) MathJax.typeset();
+        });
+    </script>
+
+</body>
+
+</html>

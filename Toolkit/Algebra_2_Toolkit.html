@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Algebra 2 Mastery Toolkit</title>
+    <meta name="description" content="Interactive decision flowchart and step cards for Algebra 2 methods" />
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --card: #222536;
+            --border: #2e3348;
+            --text: #e8eaf0;
+            --muted: #8b90a5;
+            --accent: #6c63ff;
+            --accent-glow: #6c63ff44;
+            --green: #2ecc71;
+            --amber: #f39c12;
+            --red: #e74c3c;
+            --cyan: #00d2d3;
+            --pink: #fd79a8;
+            --blue: #74b9ff;
+            --radius: 12px;
+            --shadow: 0 4px 24px #0005;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 20px 60px
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 32px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            background: white;
+            object-fit: cover;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            pointer-events: none
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-top: 6px;
+            font-size: 0.95rem
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 2px
+        }
+
+        .tag-green {
+            background: #2ecc7122;
+            color: var(--green)
+        }
+
+        .tag-amber {
+            background: #f39c1222;
+            color: var(--amber)
+        }
+
+        .tag-cyan {
+            background: #00d2d322;
+            color: var(--cyan)
+        }
+
+        .tag-pink {
+            background: #fd79a822;
+            color: var(--pink)
+        }
+
+        .tag-blue {
+            background: #74b9ff22;
+            color: var(--blue)
+        }
+
+        .tag-red {
+            background: #e74c3c22;
+            color: var(--red)
+        }
+
+        /* --- TABS --- */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 28px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: .2s;
+            font-family: inherit
+        }
+
+        .tab:hover {
+            color: var(--text)
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent)
+        }
+
+        .tab-content {
+            display: none
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn .3s
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        /* --- FLOWCHART --- */
+        .flow-section {
+            margin-bottom: 20px
+        }
+
+        .flow-node {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin: 8px 0;
+            position: relative;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .flow-node:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 16px var(--accent-glow)
+        }
+
+        .flow-node.decision {
+            border-left: 4px solid var(--amber);
+            background: linear-gradient(135deg, var(--card), #2a2540)
+        }
+
+        .flow-node.action {
+            border-left: 4px solid var(--green)
+        }
+
+        .flow-node.result {
+            border-left: 4px solid var(--cyan)
+        }
+
+        .flow-label {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px
+        }
+
+        .flow-desc {
+            color: var(--muted);
+            font-size: 0.85rem
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: var(--muted);
+            font-size: 1.2rem;
+            margin: 2px 0
+        }
+
+        .flow-branches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 8px 0
+        }
+
+        .flow-branches.three {
+            grid-template-columns: 1fr 1fr 1fr
+        }
+
+        .flow-branch {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: .2s;
+            text-align: center
+        }
+
+        .flow-branch:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px)
+        }
+
+        .flow-branch .branch-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 4px
+        }
+
+        .flow-branch .branch-result {
+            color: var(--muted);
+            font-size: 0.8rem
+        }
+
+        .flow-branch[data-card] {
+            cursor: pointer
+        }
+
+        .flow-branch[data-card]:hover .branch-result {
+            color: var(--accent)
+        }
+
+        /* --- STEP CARDS --- */
+        .cards-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .step-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: .2s
+        }
+
+        .step-card:hover {
+            border-color: var(--accent)
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            cursor: pointer;
+            gap: 12px;
+            user-select: none
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1rem
+        }
+
+        .card-mnemonic {
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: var(--accent);
+            color: #fff;
+            white-space: nowrap
+        }
+
+        .card-chevron {
+            color: var(--muted);
+            transition: .3s;
+            font-size: 1.2rem;
+            flex-shrink: 0
+        }
+
+        .step-card.open .card-chevron {
+            transform: rotate(180deg)
+        }
+
+        .card-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease
+        }
+
+        .step-card.open .card-body {
+            max-height: 2000px
+        }
+
+        .card-inner {
+            padding: 0 20px 20px
+        }
+
+        .card-when {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            font-size: 0.9rem
+        }
+
+        .card-when strong {
+            color: var(--amber)
+        }
+
+        .steps-list {
+            list-style: none;
+            counter-reset: step
+        }
+
+        .steps-list li {
+            counter-increment: step;
+            padding: 8px 0 8px 36px;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.92rem
+        }
+
+        .steps-list li:last-child {
+            border-bottom: none
+        }
+
+        .steps-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.75rem;
+            font-weight: 700
+        }
+
+        .mistake-box {
+            background: #e74c3c15;
+            border: 1px solid #e74c3c44;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 14px;
+            font-size: 0.88rem
+        }
+
+        .mistake-box strong {
+            color: var(--red)
+        }
+
+        .example-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 12px;
+            font-family: inherit;
+            transition: .2s;
+            width: 100%;
+            text-align: left
+        }
+
+        .example-toggle:hover {
+            background: var(--surface);
+            border-color: var(--accent)
+        }
+
+        .example-content {
+            display: none;
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            line-height: 1.7
+        }
+
+        .example-content.show {
+            display: block
+        }
+
+        .example-content code {
+            background: var(--card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88rem
+        }
+
+        /* --- PRINT --- */
+        @media print {
+            body {
+                background: #fff;
+                color: #000
+            }
+
+            .tabs,
+            .flow-branch:hover,
+            .card-chevron {
+                all: unset
+            }
+
+            .card-body {
+                max-height: none !important
+            }
+
+            .step-card,
+            .flow-node,
+            .flow-branch {
+                border-color: #ccc;
+                background: #f9f9fa;
+                break-inside: avoid
+            }
+
+            .card-mnemonic {
+                background: #333;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact
+            }
+
+            header::before {
+                display: none
+            }
+
+            h1 {
+                -webkit-text-fill-color: #333;
+                background: none
+            }
+        }
+
+        @media(max-width:600px) {
+            .container {
+                padding: 16px 12px 40px
+            }
+
+            h1 {
+                font-size: 1.5rem
+            }
+
+            .flow-branches {
+                grid-template-columns: 1fr
+            }
+
+            .flow-branches.three {
+                grid-template-columns: 1fr
+            }
+
+            .card-header {
+                padding: 12px 14px
+            }
+
+            .tab {
+                padding: 8px 12px;
+                font-size: 0.85rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="../edutrack_logo.jpg" alt="EduTrack Logo" class="header-logo">
+            <h1>EduTrack Hub | Toolkit</h1>
+            <p class="subtitle">Premium mastery decision tools for Units 2-5.</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('flowchart')">🗺️ Decision Flowchart</button>
+            <button class="tab" onclick="switchTab('cards')">🃏 Step Cards</button>
+        </div>
+
+        <!-- ===================== FLOWCHART TAB ===================== -->
+        <div class="tab-content active" id="tab-flowchart">
+
+            <div class="flow-node decision">
+                <div class="flow-label">❓ What type of problem do you have?</div>
+                <div class="flow-desc">Read the problem and decide which category it falls into.</div>
+            </div>
+            <div class="flow-branches three">
+                <div class="flow-branch"
+                    onclick="document.getElementById('eq-flow').scrollIntoView({behavior:'smooth'})">
+                    <div class="branch-label">= 0</div>
+                    <div class="branch-result">Equation → solve it</div>
+                </div>
+                <div class="flow-branch"
+                    onclick="document.getElementById('ineq-flow').scrollIntoView({behavior:'smooth'})">
+                    <div class="branch-label">&gt; &lt; ≥ ≤</div>
+                    <div class="branch-result">Inequality → find intervals</div>
+                </div>
+                <div class="flow-branch" data-card="sss" onclick="scrollToCard('sss')">
+                    <div class="branch-label">System</div>
+                    <div class="branch-result">Lin-Quad → SSS method</div>
+                </div>
+            </div>
+
+            <!-- EQUATION FLOW -->
+            <div id="eq-flow" class="flow-section" style="margin-top:20px">
+                <div class="flow-node decision">
+                    <div class="flow-label">Is it set = 0?</div>
+                    <div class="flow-desc">If not, rearrange so everything is on one side first.</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node action">
+                    <div class="flow-label">Step Zero: Check for GCF!</div>
+                    <div class="flow-desc">Always look for a greatest common factor first. Factor it out before doing
+                        anything else.</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node decision">
+                    <div class="flow-label">How many terms?</div>
+                </div>
+                <div class="flow-branches three">
+                    <div class="flow-branch"
+                        onclick="document.getElementById('two-terms').scrollIntoView({behavior:'smooth'})">
+                        <div class="branch-label">2 terms</div>
+                        <div class="branch-result">a² − b²?</div>
+                    </div>
+                    <div class="flow-branch"
+                        onclick="document.getElementById('three-terms').scrollIntoView({behavior:'smooth'})">
+                        <div class="branch-label">3 terms</div>
+                        <div class="branch-result">Trinomial factoring</div>
+                    </div>
+                    <div class="flow-branch" data-card="grouping" onclick="scrollToCard('grouping')">
+                        <div class="branch-label">4 terms</div>
+                        <div class="branch-result">Factor by Grouping</div>
+                    </div>
+                </div>
+
+                <div id="two-terms" style="margin-top:16px">
+                    <div class="flow-node decision">
+                        <div class="flow-label">2 terms — Is it a² − b²?</div>
+                        <div class="flow-desc">Both terms perfect squares, joined by a minus sign?</div>
+                    </div>
+                    <div class="flow-branches">
+                        <div class="flow-branch" data-card="diffsq" onclick="scrollToCard('diffsq')">
+                            <div class="branch-label">✅ Yes</div>
+                            <div class="branch-result">→ Difference of Squares</div>
+                        </div>
+                        <div class="flow-branch" data-card="sif" onclick="scrollToCard('sif')">
+                            <div class="branch-label">❌ No</div>
+                            <div class="branch-result">→ Quadratic Formula (SIF)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="three-terms" style="margin-top:16px">
+                    <div class="flow-node decision">
+                        <div class="flow-label">3 terms — Can you factor in 30 seconds?</div>
+                        <div class="flow-desc">Check: is it a perfect square trinomial? Simple (a=1)? Hard (a≠1, use
+                            AC)?</div>
+                    </div>
+                    <div class="flow-branches">
+                        <div class="flow-branch" onclick="scrollToCard('simple')">
+                            <div class="branch-label">✅ Yes — factorable!</div>
+                            <div class="branch-result">Simple or AC method or Perfect Square</div>
+                        </div>
+                        <div class="flow-branch" data-card="sif" onclick="scrollToCard('sif')">
+                            <div class="branch-label">❌ No — can't factor</div>
+                            <div class="branch-result">→ Quadratic Formula (SIF)</div>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-node decision">
+                        <div class="flow-label">After using the formula: Is the discriminant negative?</div>
+                        <div class="flow-desc">D = b² − 4ac. If D &lt; 0, there are NO real solutions.</div>
+                    </div>
+                    <div class="flow-branches">
+                        <div class="flow-branch" data-card="complex" onclick="scrollToCard('complex')">
+                            <div class="branch-label">D &lt; 0</div>
+                            <div class="branch-result">→ Complex solutions (pull out i)</div>
+                        </div>
+                        <div class="flow-branch">
+                            <div class="branch-label">D ≥ 0</div>
+                            <div class="branch-result">Real solutions — simplify &amp; done!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INEQUALITY FLOW -->
+            <div id="ineq-flow" class="flow-section" style="margin-top:20px">
+                <div class="flow-node result" style="border-left-color:var(--pink)">
+                    <div class="flow-label" style="color:var(--pink)">Quadratic Inequality? → Use ZTW</div>
+                    <div class="flow-desc">Zeros → Test intervals → Write in interval notation. <span
+                            style="cursor:pointer;color:var(--accent)" onclick="scrollToCard('ztw')">Go to ZTW card
+                            →</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================== STEP CARDS TAB =================== -->
+        <div class="tab-content" id="tab-cards">
+            <div class="cards-grid">
+
+                <!-- CARD 1: GCF -->
+                <div class="step-card" id="card-gcf">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span class="card-title">GCF Factoring</span>
+                        <div><span class="tag tag-green">Always First</span> <span class="card-mnemonic">Step
+                                Zero</span></div>
+                        <span class="card-chevron">▼</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-inner">
+                            <div class="card-when"><strong>When:</strong> Always check BEFORE any other method.</div>
+                            <ol class="steps-list">
+                                <li>Identify the largest number and variable power common to ALL terms</li>
+                                <li>Factor it out in front of a set of parentheses</li>
+                                <li>Divide each original term by the GCF to fill the parentheses</li>
+                                <li>Continue factoring what's inside if possible</li>
+                            </ol>
+                            <div class="mistake-box"><strong>⚠ Common mistake:</strong> Forgetting to include ALL terms
+                                when checking. Every single term must share the factor.</div>
+                            <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                            <div class="example-content">
+                                <strong>Factor:</strong> <code>6x³ − 12x² + 18x</code><br>
+                                GCF = 6x → <code>6x(x² − 2x + 3)</code><br>
+                                Check: can (x² − 2x + 3) be factored further? D = 4 − 12 = −8 < 0. No. ✅ Done. </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2: Simple Trinomial -->
+                    <div class="step-card" id="card-simple">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Simple Trinomial (a = 1)</span>
+                            <div><span class="tag tag-green">Factoring</span> <span class="card-mnemonic">Multiply to c,
+                                    add to b</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> x² + bx + c — the leading coefficient is
+                                    1.</div>
+                                <ol class="steps-list">
+                                    <li>Find two numbers that <strong>multiply</strong> to c (the last number)</li>
+                                    <li>AND <strong>add</strong> to b (the middle coefficient)</li>
+                                    <li>Write as (x + first)(x + second)</li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> Getting the signs wrong. If
+                                    c is positive, both numbers have the SAME sign (both + or both −). If c is negative,
+                                    they have DIFFERENT signs.</div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Factor:</strong> <code>x² − 7x + 12</code><br>
+                                    Need: multiply to +12, add to −7<br>
+                                    → −3 × −4 = 12 ✓ and −3 + (−4) = −7 ✓<br>
+                                    <strong>Answer:</strong> <code>(x − 3)(x − 4)</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3: AC Method -->
+                    <div class="step-card" id="card-ac">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Hard Trinomial (a ≠ 1)</span>
+                            <div><span class="tag tag-amber">Factoring</span> <span class="card-mnemonic">AC
+                                    Method</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> ax² + bx + c where a ≠ 1 (e.g. 2x² + 7x +
+                                    3).</div>
+                                <ol class="steps-list">
+                                    <li><strong>Step Zero:</strong> Check for GCF first!</li>
+                                    <li><strong>Multiply</strong> a × c (first coeff × last coeff)</li>
+                                    <li><strong>Find the pair:</strong> two numbers that multiply to ac AND add to b
+                                    </li>
+                                    <li><strong>Split the middle</strong> term using those two numbers</li>
+                                    <li><strong>Group</strong> into two pairs and factor each pair</li>
+                                    <li><strong>Extract</strong> the common binomial factor</li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> Forgetting Step Zero. If
+                                    there's a GCF, pull it out FIRST — it makes the AC product smaller and easier.</div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Factor:</strong> <code>2x² + 7x + 3</code><br>
+                                    a×c = 2×3 = 6. Need: multiply to 6, add to 7 → 1 and 6<br>
+                                    Split: 2x² + 1x + 6x + 3<br>
+                                    Group: x(2x + 1) + 3(2x + 1)<br>
+                                    <strong>Answer:</strong> <code>(2x + 1)(x + 3)</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 4: Difference of Squares -->
+                    <div class="step-card" id="card-diffsq">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Difference of Squares</span>
+                            <div><span class="tag tag-cyan">Pattern</span> <span class="card-mnemonic">2 terms, minus,
+                                    both squares</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> a² − b². Two terms, minus sign, both are
+                                    perfect squares.</div>
+                                <ol class="steps-list">
+                                    <li><strong>Check 3 things:</strong> Only 2 terms? Minus sign? Both perfect squares?
+                                    </li>
+                                    <li>Take the square root of each term</li>
+                                    <li>Write as (√first + √second)(√first − √second)</li>
+                                    <li>Check if either factor can be factored again (e.g. x⁴ − 16)</li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> Trying to factor a SUM of
+                                    squares. x² + 9 CANNOT be factored over the reals!</div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Factor:</strong> <code>4x² − 25</code><br>
+                                    √(4x²) = 2x, √25 = 5<br>
+                                    <strong>Answer:</strong> <code>(2x + 5)(2x − 5)</code><br><br>
+                                    <strong>Tricky one:</strong> <code>x⁴ − 16</code><br>
+                                    = (x² + 4)(x² − 4) = (x² + 4)(x + 2)(x − 2) — factor TWICE!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 5: Perfect Square Trinomial -->
+                    <div class="step-card" id="card-pst">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Perfect Square Trinomial</span>
+                            <div><span class="tag tag-cyan">Pattern</span> <span class="card-mnemonic">√first, √last,
+                                    check 2ab</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> a² + 2ab + b² or a² − 2ab + b². First and
+                                    last are perfect squares, middle = 2 × √first × √last.</div>
+                                <ol class="steps-list">
+                                    <li>Check: are the first and last terms perfect squares?</li>
+                                    <li>Check: does the middle term = 2 × √first × √last?</li>
+                                    <li>If yes: write as (√first ± √last)²</li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> Assuming any trinomial with
+                                    perfect square first/last terms is a perfect square. Always verify the middle term!
+                                </div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Factor:</strong> <code>x² + 6x + 9</code><br>
+                                    √(x²) = x, √9 = 3, check: 2(x)(3) = 6x ✓<br>
+                                    <strong>Answer:</strong> <code>(x + 3)²</code><br><br>
+                                    <strong>NOT a PST:</strong> <code>x² + 5x + 9</code> — middle should be 6x, not 5x!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 6: Factoring by Grouping -->
+                    <div class="step-card" id="card-grouping">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Factoring by Grouping</span>
+                            <div><span class="tag tag-green">Factoring</span> <span class="card-mnemonic">Split, GCF
+                                    each, extract</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> 4-term polynomial (e.g. x³ + 2x² + 3x +
+                                    6).</div>
+                                <ol class="steps-list">
+                                    <li><strong>Split</strong> into two groups of two terms</li>
+                                    <li><strong>Factor the GCF</strong> out of each group</li>
+                                    <li>Both groups should now have the SAME binomial factor</li>
+                                    <li><strong>Extract</strong> that common binomial</li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> If the second group needs a
+                                    −1 factored out, don't forget to flip ALL signs inside. e.g. −3x − 6 = −3(x + 2),
+                                    NOT −3(x − 2).</div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Factor:</strong> <code>x³ + 4x² + 3x + 12</code><br>
+                                    Group: (x³ + 4x²) + (3x + 12)<br>
+                                    GCF each: x²(x + 4) + 3(x + 4)<br>
+                                    Extract: <strong>(x + 4)(x² + 3)</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 7: Quadratic Formula -->
+                    <div class="step-card" id="card-sif">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Quadratic Formula</span>
+                            <div><span class="tag tag-amber">Solving</span> <span class="card-mnemonic">SIF</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> Factoring fails, or the problem says "use
+                                    the formula." Works on ANY quadratic.</div>
+                                <p style="text-align:center;font-size:1.1rem;margin:10px 0">$$x = \frac{-b \pm \sqrt{b^2
+                                    - 4ac}}{2a}$$</p>
+                                <ol class="steps-list">
+                                    <li><strong>S</strong> — <strong>Standard form:</strong> Write as ax² + bx + c = 0
+                                    </li>
+                                    <li><strong>I</strong> — <strong>Identify:</strong> Circle a, b, c (watch the
+                                        SIGNS!)</li>
+                                    <li><strong>F</strong> — <strong>Formula:</strong> Plug in and compute carefully
+                                    </li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> Getting the sign of b wrong.
+                                    If b = −5, then −b = +5. Circle b AND its sign.</div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Solve:</strong> <code>2x² + 5x − 3 = 0</code><br>
+                                    S: Already in standard form ✓<br>
+                                    I: a = 2, b = 5, c = −3<br>
+                                    F: x = (−5 ± √(25 + 24)) / 4 = (−5 ± 7) / 4<br>
+                                    <strong>x = 1/2 or x = −3</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 8: Complex Numbers -->
+                    <div class="step-card" id="card-complex">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Complex Numbers</span>
+                            <div><span class="tag tag-pink">D &lt; 0</span> <span class="card-mnemonic">Pull out the
+                                    i</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> The discriminant is negative. Negative
+                                    under the square root? Keep going!</div>
+                                <ol class="steps-list">
+                                    <li><strong>i = √(−1).</strong> That's it — i is just a name for this number</li>
+                                    <li><strong>Split:</strong> √(−n) = √n × √(−1) = √n × i</li>
+                                    <li><strong>Keep solving:</strong> Finish the quadratic formula with i in the answer
+                                    </li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> Stopping when you see a
+                                    negative discriminant. Don't stop — pull out the i and keep going!</div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Solve:</strong> <code>x² + 2x + 5 = 0</code><br>
+                                    D = 4 − 20 = −16 (negative!)<br>
+                                    x = (−2 ± √(−16)) / 2<br>
+                                    = (−2 ± 4i) / 2<br>
+                                    <strong>x = −1 ± 2i</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 9: Completing the Square -->
+                    <div class="step-card" id="card-cts">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Completing the Square</span>
+                            <div><span class="tag tag-blue">Vertex Form</span> <span class="card-mnemonic">Half-b,
+                                    square it, add &amp; subtract</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> You need vertex form a(x−h)² + k, or the
+                                    problem says "complete the square." Best for finding the vertex of a parabola.</div>
+                                <ol class="steps-list">
+                                    <li>Move the constant to the other side (or isolate x² + bx)</li>
+                                    <li>Take <strong>half of b</strong> → (b/2)</li>
+                                    <li><strong>Square it</strong> → (b/2)²</li>
+                                    <li><strong>Add this value to BOTH sides</strong></li>
+                                    <li>The left side is now a perfect square trinomial → write as (x + b/2)²</li>
+                                    <li>Solve or rearrange into vertex form</li>
+                                </ol>
+                                <div class="mistake-box"><strong>⚠ Common mistake:</strong> Forgetting to add (b/2)² to
+                                    BOTH sides. If you add it to the left, you must add it to the right too — otherwise
+                                    the equation is changed!</div>
+                                <button class="example-toggle" onclick="toggleExample(this)">▶ Worked example</button>
+                                <div class="example-content">
+                                    <strong>Convert to vertex form:</strong> <code>x² + 6x + 2</code><br>
+                                    Half of 6 = 3, square it = 9<br>
+                                    x² + 6x + 9 − 9 + 2 (add and subtract 9)<br>
+                                    = (x + 3)² − 7<br>
+                                    <strong>Vertex form: (x + 3)² − 7 → vertex at (−3, −7)</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 10: Linear-Quadratic Systems -->
+                    <div class="step-card" id="card-sss">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Linear-Quadratic Systems</span>
+                            <div><span class="tag tag-cyan">Systems</span> <span class="card-mnemonic">SSS</span></div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> A system with one linear equation and one
+                                    quadratic equation. "Where does the line cross the parabola?"</div>
+                                <ol class="steps-list">
+                                    <li><strong>S</strong> — <strong>Substitute:</strong> Plug the linear equation into
+                                        the quadratic (replace y)</li>
+                                    <li><strong>S</strong> — <strong>Simplify:</strong> Rearrange so everything = 0</li>
+                                    <li><strong>S</strong> — <strong>Solve:</strong> Factor or use quadratic formula.
+                                        Then find BOTH x AND y</li>
+                                </ol>
+                                <p style="margin-top:10px;font-size:0.88rem;color:var(--muted)">D > 0 → 2 intersections
+                                    &nbsp;|&nbsp; D = 0 → 1 tangent point &nbsp;|&nbsp; D < 0 → no intersection</p>
+                                        <div class="mistake-box"><strong>⚠ Common mistake:</strong> Finding x but
+                                            forgetting to back-solve for y. You need BOTH coordinates for each solution
+                                            point!</div>
+                                        <button class="example-toggle" onclick="toggleExample(this)">▶ Worked
+                                            example</button>
+                                        <div class="example-content">
+                                            <strong>Solve:</strong> <code>y = x + 1</code> and
+                                            <code>y = x² − 3x + 5</code><br>
+                                            Substitute: x + 1 = x² − 3x + 5<br>
+                                            Simplify: 0 = x² − 4x + 4<br>
+                                            Solve: (x − 2)² = 0 → x = 2<br>
+                                            Back-solve: y = 2 + 1 = 3<br>
+                                            <strong>Solution: (2, 3)</strong> — one tangent point
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 11: Quadratic Inequalities -->
+                    <div class="step-card" id="card-ztw">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <span class="card-title">Quadratic Inequalities</span>
+                            <div><span class="tag tag-pink">Inequalities</span> <span class="card-mnemonic">ZTW</span>
+                            </div>
+                            <span class="card-chevron">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-inner">
+                                <div class="card-when"><strong>When:</strong> Solving x² + bx + c > 0, < 0, ≥ 0, or ≤
+                                        0. "Where is the parabola above/below zero?" </div>
+                                        <ol class="steps-list">
+                                            <li><strong>Z</strong> — <strong>Zeros:</strong> Solve the equation (set =
+                                                0) to find boundary points</li>
+                                            <li><strong>T</strong> — <strong>Test:</strong> Plot zeros on a number line
+                                                → pick one test point per interval → plug in → is it + or −?</li>
+                                            <li><strong>W</strong> — <strong>Write:</strong> Pick the intervals that
+                                                satisfy the inequality → interval notation</li>
+                                        </ol>
+                                        <p style="margin-top:10px;font-size:0.88rem;color:var(--muted)">
+                                            < or> → open parentheses ( ) &nbsp;|&nbsp; ≤ or ≥ → closed brackets [ ]
+                                        </p>
+                                        <div class="mistake-box"><strong>⚠ Common mistake:</strong> Using brackets when
+                                            the inequality is strict (< or>). Strict means the zeros are NOT included →
+                                                parentheses only!</div>
+                                        <button class="example-toggle" onclick="toggleExample(this)">▶ Worked
+                                            example</button>
+                                        <div class="example-content">
+                                            <strong>Solve:</strong> <code>x² − 5x + 6 > 0</code><br>
+                                            Z: (x−2)(x−3) = 0 → zeros at x = 2 and x = 3<br>
+                                            T: Test x=0: (+)(−)(−)=+6 ✓ | Test x=2.5: (−) ✗ | Test x=4: (+) ✓<br>
+                                            W: Want > 0 (positive intervals)<br>
+                                            <strong>Solution: (−∞, 2) ∪ (3, ∞)</strong>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD 12: End Behavior -->
+                        <div class="step-card" id="card-endbeh">
+                            <div class="card-header" onclick="toggleCard(this)">
+                                <span class="card-title">End Behavior</span>
+                                <div><span class="tag tag-blue">Polynomials</span> <span class="card-mnemonic">Even =
+                                        same, Odd = opposite</span></div>
+                                <span class="card-chevron">▼</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-inner">
+                                    <div class="card-when"><strong>When:</strong> Determining what happens to a
+                                        polynomial graph as x → ±∞.</div>
+                                    <ol class="steps-list">
+                                        <li>Find the <strong>degree</strong> (highest exponent) and <strong>leading
+                                                coefficient</strong></li>
+                                        <li><strong>Even degree:</strong> both ends go the SAME direction (😊 or 😞)
+                                        </li>
+                                        <li><strong>Odd degree:</strong> ends go OPPOSITE directions (/ or \)</li>
+                                        <li>Positive leading coeff → right end goes UP. Negative → right end goes DOWN.
+                                        </li>
+                                    </ol>
+                                    <button class="example-toggle" onclick="toggleExample(this)">▶ Quick
+                                        reference</button>
+                                    <div class="example-content">
+                                        Even + Positive → ↑↑ "happy 😊"<br>
+                                        Even + Negative → ↓↓ "sad 😞"<br>
+                                        Odd + Positive → ↓↑ "uphill /"<br>
+                                        Odd + Negative → ↑↓ "downhill \"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD 13: Rational Simplifying -->
+                        <div class="step-card" id="card-ffd">
+                            <div class="card-header" onclick="toggleCard(this)">
+                                <span class="card-title">Simplify Rational Expressions</span>
+                                <div><span class="tag tag-amber">Rationals</span> <span class="card-mnemonic">FFD</span>
+                                </div>
+                                <span class="card-chevron">▼</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-inner">
+                                    <div class="card-when"><strong>When:</strong> Simplifying a fraction with
+                                        polynomials on top and bottom.</div>
+                                    <ol class="steps-list">
+                                        <li><strong>F</strong> — <strong>Factor</strong> the numerator AND denominator
+                                            completely</li>
+                                        <li><strong>F</strong> — <strong>Find</strong> matching factors (top and bottom)
+                                        </li>
+                                        <li><strong>D</strong> — <strong>Delete</strong> (cancel) the matching factors.
+                                            State domain restrictions!</li>
+                                    </ol>
+                                    <div class="mistake-box"><strong>⚠ Common mistake:</strong> Cancelling TERMS instead
+                                        of FACTORS. You can NOT cancel the x in (x+3)/(x+5)! Factor first, cancel
+                                        factors only.</div>
+                                    <button class="example-toggle" onclick="toggleExample(this)">▶ Worked
+                                        example</button>
+                                    <div class="example-content">
+                                        <strong>Simplify:</strong> <code>(x² − 9) / (x + 3)</code><br>
+                                        F: (x+3)(x−3) / (x+3)<br>
+                                        F: (x+3) matches!<br>
+                                        D: Cancel → <strong>x − 3</strong> (x ≠ −3)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD 14: Asymptotes -->
+                        <div class="step-card" id="card-bobo">
+                            <div class="card-header" onclick="toggleCard(this)">
+                                <span class="card-title">Horizontal Asymptotes</span>
+                                <div><span class="tag tag-red">Rationals</span> <span class="card-mnemonic">BOBO BOTN
+                                        EATS DC</span></div>
+                                <span class="card-chevron">▼</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-inner">
+                                    <div class="card-when"><strong>When:</strong> Finding the horizontal asymptote of a
+                                        rational function.</div>
+                                    <ol class="steps-list">
+                                        <li><strong>BOBO:</strong> <strong>B</strong>igger <strong>O</strong>n
+                                            <strong>B</strong>ottom → y = <strong>0</strong> (degree top < degree
+                                                bottom)</li>
+                                        <li><strong>BOTN:</strong> <strong>B</strong>igger <strong>O</strong>n
+                                            <strong>T</strong>op → <strong>N</strong>one (degree top > degree bottom)
+                                        </li>
+                                        <li><strong>EATS DC:</strong> <strong>E</strong>xponents <strong>A</strong>re
+                                            <strong>T</strong>he <strong>S</strong>ame → <strong>D</strong>ivide
+                                            <strong>C</strong>oefficients
+                                        </li>
+                                    </ol>
+                                    <div class="mistake-box"><strong>⚠ Common mistake:</strong> Confusing horizontal
+                                        asymptotes with vertical. HA = behavior as x→±∞. VA = where denominator = 0.
+                                    </div>
+                                    <button class="example-toggle" onclick="toggleExample(this)">▶ Worked
+                                        example</button>
+                                    <div class="example-content">
+                                        <code>f(x) = (2x² + 1)/(x² − 4)</code><br>
+                                        Degrees are the same (both 2) → EATS DC<br>
+                                        Divide coefficients: 2/1 = 2<br>
+                                        <strong>HA: y = 2</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- cards-grid -->
+                </div><!-- tab-cards -->
+            </div><!-- container -->
+
+            <script>
+                function switchTab(id) {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                    document.getElementById('tab-' + id).classList.add('active');
+                    document.querySelector(`.tab[onclick*="${id}"]`).classList.add('active');
+                }
+                function toggleCard(header) {
+                    const card = header.closest('.step-card');
+                    card.classList.toggle('open');
+                }
+                function toggleExample(btn) {
+                    const content = btn.nextElementSibling;
+                    content.classList.toggle('show');
+                    btn.textContent = content.classList.contains('show') ? '▼ Hide example' : '▶ Worked example';
+                    if (btn.textContent.includes('reference')) btn.textContent = content.classList.contains('show') ? '▼ Hide reference' : '▶ Quick reference';
+                }
+                function scrollToCard(id) {
+                    switchTab('cards');
+                    setTimeout(() => {
+                        const card = document.getElementById('card-' + id);
+                        if (card) { card.classList.add('open'); card.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                    }, 100);
+                }
+                window.addEventListener('load', () => { if (window.MathJax && MathJax.typeset) MathJax.typeset(); });
+            </script>
+</body>
+
+</html>

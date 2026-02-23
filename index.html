@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EduTrack Hub | Algebra 2</title>
+    <meta name="description"
+        content="EduTrack Hub - Central portal for Algebra 2 learning tools, homework apps, and resources." />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            background: white;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 16px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius);
+            padding: 32px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-tag {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        footer {
+            margin-top: 80px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <img src="edutrack_logo.jpg" alt="EduTrack Logo" class="logo-img">
+        <h1>EduTrack Hub</h1>
+        <p class="subtitle">A premium mastery-based learning portal designed to accelerate Algebra 2 performance through
+            interactive decision tools and scaffolded practice.</p>
+    </header>
+
+    <main class="grid">
+
+        <!-- TOOLKIT -->
+        <a href="Toolkit/Algebra_2_Toolkit.html" class="card">
+            <div class="card-icon">🧠</div>
+            <div class="card-tag">Tool</div>
+            <h3>Mastery Toolkit</h3>
+            <p>Interactive decision flowchart and 14+ step-by-step method cards for every Algebra 2 technique.</p>
+            <span style="color:var(--accent); font-weight:700;">Launch Tool →</span>
+        </a>
+
+        <!-- HOMEWORK APP -->
+        <a href="Homeworks/quadratic_factoring_homework.html" class="card">
+            <div class="card-icon">✏️</div>
+            <div class="card-tag">App</div>
+            <h3>Quadratic Factoring</h3>
+            <p>Scaffolded practice session with anti-cheat protection. Includes worked examples and multi-step
+                validation.</p>
+            <span style="color:var(--accent); font-weight:700;">Open Session →</span>
+        </a>
+
+        <!-- SYSTEMS -->
+        <a href="Homeworks/systems_mixed_methods_homework.html" class="card">
+            <div class="card-icon">⚖️</div>
+            <div class="card-tag">Homework</div>
+            <h3>Systems of Equations</h3>
+            <p>Mixed-method practice focusing on substitution and elimination techniques for linear-quadratic systems.
+            </p>
+            <span style="color:var(--accent); font-weight:700;">View Assignment →</span>
+        </a>
+
+    </main>
+
+    <footer>
+        Built for the <a href="#">Gabriel-on-the-Hill Mastery Program</a> &bull; 2026
+    </footer>
+
+</body>
+
+</html>
