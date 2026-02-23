@@ -424,6 +424,28 @@
             }
         }
 
+        .instructions-box {
+            margin-bottom: 32px;
+            padding: 20px 24px;
+            background: #ebf8ff;
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius-md);
+            color: var(--accent-dark);
+        }
+
+        .instructions-box strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .instructions-box ul {
+            margin-top: 8px;
+            margin-bottom: 0;
+            padding-left: 20px;
+            line-height: 1.7;
+        }
+
         /* Print formatting */
         @media print {
             body {
@@ -535,11 +557,10 @@
             PART B — Your Turn
             <span class="timer" id="timer-display">⏱ Time: 00:00</span>
         </h2>
-        <div class="instructions-box"
-            style="margin-bottom: 32px; padding: 20px 24px; background: #ebf8ff; border-left: 4px solid var(--accent); border-radius: var(--radius-md); color: var(--accent-dark);">
-            <strong style="display: block; margin-bottom: 8px; font-size: 1.05rem;">Instructions:</strong>
+        <div class="instructions-box">
+            <strong>Instructions:</strong>
             For each quadratic equation below, factor the expression completely to find the solutions.
-            <ul style="margin-top: 8px; margin-bottom: 0; padding-left: 20px; line-height: 1.7;">
+            <ul>
                 <li><strong>Step Zero:</strong> ALWAYS check for a Greatest Common Factor (GCF) first!</li>
                 <li>Fill out every input field. If a field does not apply (like there being no GCF), just write
                     <strong>"None"</strong> or <strong>"N/A"</strong>.
